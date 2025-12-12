@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AutoLuxe</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <h2 id="form-title">Welcome Back</h2>
+            <p class="error-msg" id="error-msg">Invalid credentials</p>
+            
+            <form id="auth-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required placeholder="user@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="password123">
+                </div>
+                <div class="form-group" id="name-group" style="display:none;">
+                    <label>Full Name</label>
+                    <input type="text" id="fullname">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            
+            <p class="toggle-auth" id="toggle-auth">New here? Create an account</p>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        // Specific logic for Login Page initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            initAuth();
+        });
+    </script>
+</body>
+</html>

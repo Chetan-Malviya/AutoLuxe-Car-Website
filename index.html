@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoLuxe - Premium Cars</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">AUTOLUXE</div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="router('home')">Home</a></li>
+                    <li><a href="#" onclick="router('inventory')">Inventory</a></li>
+                    <li><a href="#" onclick="router('favorites')">Favorites</a></li>
+                    <li><a href="#" onclick="router('admin')">Admin</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <span id="user-display" style="font-weight: 600; font-size: 0.9rem;"></span>
+                    <button class="btn btn-primary" onclick="logout()" style="padding: 5px 15px; font-size: 0.8rem;">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app-root">
+        
+        <section id="view-home">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Experience The Future</h1>
+                    <p>Discover our premium selection of electric and sports vehicles.</p>
+                    <button class="btn btn-primary" onclick="router('inventory')">Explore Cars</button>
+                    <button class="btn btn-outline" onclick="router('contact')">Request Test Drive</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-inventory" class="hidden container" style="padding-top: 40px;">
+            <h2 class="section-title">Our Inventory</h2>
+            
+            <div id="compare-bar" style="background: #eef; padding: 15px; margin-bottom: 20px; display: none; justify-content: space-between; align-items: center;">
+                <span>Comparing <span id="compare-count">0</span> cars</span>
+                <div>
+                    <button class="btn btn-primary" style="font-size: 0.8rem;" onclick="router('comparison')">View Comparison</button>
+                    <button class="btn btn-outline" style="color: #333; border-color: #333; font-size: 0.8rem;" onclick="clearCompare()">Clear</button>
+                </div>
+            </div>
+
+            <div class="inventory-controls">
+                <input type="text" id="search-input" class="search-bar" placeholder="Search model (e.g., Tesla)...">
+            </div>
+
+            <div class="grid" id="car-grid">
+                </div>
+        </section>
+
+        <section id="view-comparison" class="hidden container" style="padding-top: 40px;">
+            <h2 class="section-title">Vehicle Comparison</h2>
+            <button class="btn btn-outline" onclick="router('inventory')" style="color: #333; border-color: #333; margin-bottom: 20px;">&larr; Back to Inventory</button>
+            <div id="comparison-container" class="compare-container">
+                </div>
+        </section>
+
+        <section id="view-favorites" class="hidden container" style="padding-top: 40px;">
+            <h2 class="section-title">Your Wishlist</h2>
+            <div class="grid" id="fav-grid">
+                </div>
+            <p id="no-favs" style="text-align: center; display: none;">No favorites added yet.</p>
+        </section>
+
+        <section id="view-contact" class="hidden container" style="padding-top: 40px;">
+            <h2 class="section-title">Request Test Drive</h2>
+            <div class="form-section">
+                <form id="test-drive-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Car Model</label>
+                        <select id="contact-car-select" style="width: 100%; padding: 10px;">
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Date</label>
+                        <input type="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-admin" class="hidden container" style="padding-top: 40px;">
+            <h2 class="section-title">Admin Dashboard</h2>
+            <div class="admin-panel">
+                <h3>Add New Vehicle</h3>
+                <form id="admin-form" style="margin-top: 20px;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Make & Model</label>
+                            <input type="text" id="admin-model" required placeholder="e.g. BMW M4">
+                        </div>
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" id="admin-price" required placeholder="75000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="number" id="admin-year" required placeholder="2024">
+                        </div>
+                        <div class="form-group">
+                            <label>Fuel Type</label>
+                            <select id="admin-fuel" style="width: 100%; padding: 10px;">
+                                <option value="Petrol">Petrol</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="url" id="admin-img" required placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Car</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="router('contact'); closeModal()">Request Quote</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h4>AutoLuxe</h4>
+                <ul>
+                    <li>About Us</li>
+                    <li>Careers</li>
+                    <li>Press</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li>Contact</li>
+                    <li>FAQ</li>
+                    <li>Privacy Policy</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <p>&copy; 2025 AutoLuxe Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Init Main App
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+    </script>
+</body>
+</html>
